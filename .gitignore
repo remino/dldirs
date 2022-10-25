@@ -4,3 +4,5 @@ template
 !/public/download/.htaccess
 !/public/download/.gitkeep
 !/public/download/401.html
+!/public/download/index.html
+
