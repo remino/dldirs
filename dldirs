@@ -11,11 +11,11 @@ dldirs_main() {
 	e_no_template=18
 	e_no_dest=19
 	e_exists=20
+	e_no_parent=21
 
 	scriptinv="$( basename "$0" )"
 	scriptpath="$( readlink -f "$0" )"
 	scriptname="$( basename "$scriptpath" )"
-	scriptdir="$( dirname "$scriptpath" )"
 
 	SUBDIR_PUBLIC="public"
 	SUBDIR_TEMPLATE="template"
@@ -41,7 +41,7 @@ dldirs_main() {
 	[ -z "$cmd" ] && cmd="help"
 
 	case "$cmd" in
-		help|deploy|init|new|version) "dldirs_$cmd" "$@" ;;
+		help|deploy|init|new|parent|version) "dldirs_$cmd" "$@" ;;
 		*) _invalid_cmd ;;
 	esac
 
@@ -61,6 +61,7 @@ COMMANDS:
 	deploy      Deploy public files to DEPLOY_DEST in .env via rsync.
 	init <dir>  Initialize new parent directory.
 	new <dir>   Create new public dldirs directory.
+	parent      Show parent directory path.
 	help        Show this help screen.
 	version     Show version number.
 
@@ -78,7 +79,7 @@ dldirs_deploy() {
 
 	[ -z "$DEPLOY_DEST" ] && _fatal $e_no_dest "DEPLOY_DEST not set for deploy destination."
 
-	src="$scriptdir/$SUBDIR_PUBLIC/"
+	src="$( _find_parent_dir )/$SUBDIR_PUBLIC/"
 
 	args="-n"
 	[ $dryrun -eq 0 ] && args=""
@@ -106,8 +107,8 @@ dldirs_new() {
 	newdir="$1"
 	[ -z "$newdir" ] && _fatal $e_args "Missing new directory name. See -h for details."
 
-	template_path="$scriptdir/$SUBDIR_TEMPLATE"
-	newdir_path="$scriptdir/$SUBDIR_PUBLIC/$SUBDIR_CONTAINER/$newdir"
+	template_path="$( _find_parent_dir )/$SUBDIR_TEMPLATE"
+	newdir_path="$( _find_parent_dir )/$SUBDIR_PUBLIC/$SUBDIR_CONTAINER/$newdir"
 
 	[ -d "$newdir_path" ] && _fatal $e_exists "Already exists: $newdir_path"
 	[ ! -d "$template_path" ] && _fatal $e_no_template "No template directory: $template_path"
@@ -120,6 +121,10 @@ dldirs_new() {
 	done
 
 	_echo "$newdir_path"
+}
+
+dldirs_parent() {
+	_find_parent_dir
 }
 
 dldirs_version() {
@@ -146,6 +151,20 @@ _fatal() {
 	exit "$exit_code"
 }
 
+_find_parent_dir() {
+	[ -n "$parentdir" ] && echo "$parentdir" && return
+
+	parentdir="$( pwd )"
+
+	while [ "$parentdir" != "/" ]
+	do
+		[ -f "$parentdir/.dldirs" ] && _echo "$parentdir" && return
+		parentdir="$( dirname "$parentdir" )"
+	done
+
+	_fatal $e_no_parent "No parent directory found."
+}
+
 _invalid_cmd() {
 	_error "Invalid command: $cmd"
 	_echo
@@ -161,7 +180,7 @@ _invalid_opt() {
 }
 
 _load_env() {
-	ENV_FILE="$scriptdir/.env"
+	ENV_FILE="$( _find_parent_dir )/.env"
 	# shellcheck source=/dev/null
 	[ -f "$ENV_FILE" ] && . "$ENV_FILE"
 }
