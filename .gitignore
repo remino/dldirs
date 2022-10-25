@@ -1,4 +1,6 @@
-*/*
 .env
 template
+/public/download/*
+!/public/download/.htaccess
 !/public/download/.gitkeep
+!/public/download/401.html

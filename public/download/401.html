@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>401 Unauthorized</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<style>
+			:root {
+				--color-bg: #fff;
+				--color-fg: #000;
+			}
+
+			body,
+			html {
+				width: 100%;
+			}
+
+			body {
+				align-items: stretch;
+				background-color: var(--color-bg);
+				color: var(--color-fg);
+				display: flex;
+				flex-direction: column;
+				font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				justify-content: center;
+				margin: 0;
+				min-height: 100%;
+				padding: 0;
+			}
+
+			h1 {
+				font-size: 1.4rem;
+				margin: 1em 0;
+			}
+
+			header,
+			section {
+				margin: 2rem 0;
+			}
+
+			header {
+				text-align: center;
+			}
+
+			html {
+				height: 100%;
+			}
+
+			main {
+				box-sizing: border-box;
+				margin: 0 auto;
+				max-width: 30rem;
+				padding: 2rem 1rem;
+			}
+
+			@media (prefers-color-scheme: dark) {
+				:root {
+					--color-bg: #000;
+					--color-fg: #fff;
+				}
+
+				img {
+					filter: invert(1);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<h1>401 Unauthorized</h1>
+		</main>
+		<script>
+			if (navigator.userAgent.includes('Instagram')) {
+				document.getElementsByTagName('main')[0].innerHTML = `
+					<header>
+						<img
+							src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDMzLjg2NyAzMy44NjciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggc3R5bGU9InN0cm9rZS13aWR0aDouMjY0NTgzIiBkPSJNMTYuODkgMi4xMmExNC43MyAxNC43MyAwIDAgMC03LjM2NSAxLjk4M0MyLjQ0OSA4LjE4OC4wMTcgMTcuMjY2IDQuMTAzIDI0LjM0M2M0LjA4NSA3LjA3NSAxMy4xNjMgOS41MDcgMjAuMjM5IDUuNDIyIDcuMDc1LTQuMDg1IDkuNTA4LTEzLjE2NCA1LjQyMy0yMC4yNEMyNy4wMiA0Ljc3MiAyMi4wMjIgMi4xMTQgMTYuODkgMi4xMnptLjEgMi4xMDdhMTIuNjggMTIuNjggMCAwIDEgMTAuOTQzIDYuMzU2IDEyLjY4MiAxMi42ODIgMCAwIDEtMy43NTUgMTYuNzhsLTEuNDUzLTIuNTE2YzEuNjIzLS43MyAyLjUyNC0yLjIyNyAyLjYyMy00LjQyMi4wNDItLjkwNC4wNTItMS4xOTIuMDUyLTMuNDkycy0uMDEtMi41ODctLjA1LTMuNDljLS4xMzktMy4wNzItMS44NDctNC43ODQtNC45MjUtNC45MjUtLjkwNC0uMDQxLTEuMTkyLS4wNTEtMy40OTItLjA1MXMtMi41ODcuMDEtMy40OS4wNWMtLjA0OC4wMDItLjA5NC4wMDYtLjE0MS4wMWwtMS43OC0zLjA4NGExMi42MzggMTIuNjM4IDAgMCAxIDUuNDY4LTEuMjE2ek05LjY5IDYuNWwxLjQ1NCAyLjUxOWMtMS42MjQuNzI5LTIuNTI0IDIuMjI2LTIuNjI1IDQuNDIyLS4wNDEuOTA0LS4wNTEgMS4xOTItLjA1MSAzLjQ5MSAwIDIuMy4wMSAyLjU4OC4wNSAzLjQ5Mi4xNDEgMy4wNzQgMS44NDcgNC43ODMgNC45MjUgNC45MjQuOTA0LjA0MSAxLjE5Mi4wNTEgMy40OTEuMDUxIDIuMyAwIDIuNTg4LS4wMSAzLjQ5Mi0uMDVsLjE0LS4wMSAxLjc4IDMuMDgyYTEyLjY4IDEyLjY4IDAgMCAxLTE2LjQwOS01LjEzOUExMi42ODMgMTIuNjgzIDAgMCAxIDkuNjkgNi41MDF6bTcuMjQ0IDMuNDkyYzIuMjYgMCAyLjUzLjAwOCAzLjQyMi4wNSAyLjI5NS4xMDQgMy4zNjcgMS4xOTIgMy40NyAzLjQ3LjA0Mi44OTIuMDUgMS4xNi4wNSAzLjQyIDAgMi4yNjItLjAwOSAyLjUzLS4wNSAzLjQyMi0uMDc2IDEuNjU4LS42NjUgMi42ODctMS44NjcgMy4xNjNsLTItMy40NjNhNC4zNDggNC4zNDggMCAwIDAtNC4yMTctNy4zMDNsLTEuNTgtMi43MzdjLjU0NC0uMDE3IDEuMTMtLjAyMiAyLjc3Mi0uMDIyem0tNS4wMjMuMzU1IDIgMy40NjNhNC4zNDkgNC4zNDkgMCAwIDAgNC4yMTcgNy4zMDNsMS41OCAyLjczOGMtLjU0Mi4wMTgtMS4xMzIuMDI0LTIuNzc0LjAyNC0yLjI2IDAtMi41MjktLjAxLTMuNDIxLS4wNS0yLjMtLjEwNS0zLjM2Ni0xLjE5OS0zLjQ3LTMuNDcxLS4wNDItLjg5My0uMDUtMS4xNi0uMDUtMy40MjIgMC0yLjI2LjAwOS0yLjUyOC4wNS0zLjQyMS4wNzYtMS42Ni42NjUtMi42ODcgMS44NjgtMy4xNjR6bTkuNTQzIDEuMDVhMS4wMTYgMS4wMTYgMCAxIDAgMCAyLjAzMyAxLjAxNiAxLjAxNiAwIDAgMCAwLTIuMDMzem0tNC41MiAyLjcxM2EyLjgyMiAyLjgyMiAwIDAgMSAyLjIyNSA0LjU1OGwtMi42MTYtNC41M2MuMTI4LS4wMTguMjU5LS4wMjguMzkxLS4wMjh6bS0yLjIyNCAxLjA4NiAyLjYxNiA0LjUzYTIuODIyIDIuODIyIDAgMCAxLTIuNjE2LTQuNTN6Ii8+PC9zdmc+"
+							alt="No Instagram"
+						/>
+					</header>
+					<section lang="en">
+						<h1>Please open outside of Instagram</h1>
+						<p>This page does not work in Instagram.</p>
+						<p>Please open the URL in a browser.</p>
+					</section>
+					<section lang="fr">
+						<h1>Veuillez ouvrir à l'extérieur d'Instagram</h1>
+						<p>Cette page ne peut être ouverte à l'intérieur d'Instagram.</p>
+						<p>Veuillez ouvrir l'addresse dans un navigateur.</p>
+					</section>
+					<section lang="ja">
+						<h1>Instagramの以外で開いてください</h1>
+						<p>このページはInstagramで表示ができません。</p>
+						<p>お手数ですが、ブラウザーで開けてみてください。</p>
+					</section>
+				`
+			}
+		</script>
+	</body>
+</html>
