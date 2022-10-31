@@ -12,6 +12,8 @@ dldirs_main() {
 	e_no_dest=19
 	e_exists=20
 	e_no_parent=21
+	e_no_dir=22
+	e_cd=23
 
 	scriptinv="$( basename "$0" )"
 	scriptpath="$( readlink -f "$0" )"
@@ -41,7 +43,7 @@ dldirs_main() {
 	[ -z "$cmd" ] && cmd="help"
 
 	case "$cmd" in
-		help|deploy|init|new|parent|version) "dldirs_$cmd" "$@" ;;
+		help|deploy|init|new|parent|version|zip) "dldirs_$cmd" "$@" ;;
 		*) _invalid_cmd ;;
 	esac
 
@@ -64,6 +66,7 @@ COMMANDS:
 	parent      Show parent directory path.
 	help        Show this help screen.
 	version     Show version number.
+	zip <dir>   Zip up download directory without private files.
 
 OPTIONS:
 
@@ -129,6 +132,34 @@ dldirs_parent() {
 
 dldirs_version() {
 	_echo "$scriptname $VERSION"
+}
+
+dldirs_zip() {
+	_load_env
+
+	dirname="$1"
+
+	[ -z "$dirname" ] && _fatal $e_args "Missing directory name. See -h for details."
+
+	src="$( _find_parent_dir )/$SUBDIR_PUBLIC/$SUBDIR_CONTAINER"
+
+	[ ! -d "$src" ] && _fatal $e_no_parent "No parent directory found."
+
+	_cd "$src"
+
+	[ ! -d "$dirname" ] && _fatal $e_no_dir "No directory found: $dirname"
+
+	zipfile="$dirname/$dirname.zip"
+
+	zip -r "$zipfile" "$dirname" -x '*/.*' '*/_*' '*/*.zip'
+
+	_echo "$SUBDIR_PUBLIC/$SUBDIR_CONTAINER/$zipfile"
+}
+
+_cd() {
+	[ -z "$1" ] && _fatal $e_args "Missing directory name. See -h for details."
+	[ ! -d "$1" ] && _fatal $e_no_dir "No such directory: $1"
+	cd "$1" || _fatal $e_cd "Failed to change directory: $1"
 }
 
 _echo() {
