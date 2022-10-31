@@ -52,7 +52,7 @@ chmod +x dldirs
 ## Usage
 
 ```
-dldirs 1.1.1
+dldirs 1.1.2
 
 USAGE: dldirs [<options>] <command> [<args>]
 
