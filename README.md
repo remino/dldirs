@@ -60,18 +60,20 @@ Manage download directories.
 
 COMMANDS:
 
-	deploy      Deploy public files to DEPLOY_DEST in .env via rsync.
-	init <dir>  Initialize new parent directory.
-	new <dir>   Create new public dldirs directory.
-	parent      Show parent directory path.
-	help        Show this help screen.
-	version     Show version number.
+	deploy          Deploy public files to DEPLOY_DEST in .env via rsync.
+	genauth <dir>   Generate authentication files for <dir>.
+	init <dir>      Initialize new parent directory.
+	new <dir>       Create new public dldirs directory.
+	parent          Show parent directory path.
+	help            Show this help screen.
+	version         Show version number.
+	zip <dir>       Zip up download directory without private files.
 
 OPTIONS:
 
-	-h          Show this help screen.
-	-p          Proceed with actual deployment instead of a default dry-run.
-	-v          Show version number.
+	-h              Show this help screen.
+	-p              Proceed with actual deployment instead of a default dry-run.
+	-v              Show version number.
 
 ```
 
