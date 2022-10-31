@@ -43,7 +43,7 @@ dldirs_main() {
 	[ -z "$cmd" ] && cmd="help"
 
 	case "$cmd" in
-		help|deploy|init|new|parent|version|zip) "dldirs_$cmd" "$@" ;;
+		help|genauth|deploy|init|new|parent|version|zip) "dldirs_$cmd" "$@" ;;
 		*) _invalid_cmd ;;
 	esac
 
@@ -60,19 +60,20 @@ Manage download directories.
 
 COMMANDS:
 
-	deploy      Deploy public files to DEPLOY_DEST in .env via rsync.
-	init <dir>  Initialize new parent directory.
-	new <dir>   Create new public dldirs directory.
-	parent      Show parent directory path.
-	help        Show this help screen.
-	version     Show version number.
-	zip <dir>   Zip up download directory without private files.
+	deploy          Deploy public files to DEPLOY_DEST in .env via rsync.
+	genauth <dir>   Generate authentication files for <dir>.
+	init <dir>      Initialize new parent directory.
+	new <dir>       Create new public dldirs directory.
+	parent          Show parent directory path.
+	help            Show this help screen.
+	version         Show version number.
+	zip <dir>       Zip up download directory without private files.
 
 OPTIONS:
 
-	-h          Show this help screen.
-	-p          Proceed with actual deployment instead of a default dry-run.
-	-v          Show version number.
+	-h              Show this help screen.
+	-p              Proceed with actual deployment instead of a default dry-run.
+	-v              Show version number.
 
 USAGE
 }
@@ -98,6 +99,22 @@ dldirs_deploy() {
 		"$src" \
 		"$DEPLOY_DEST" \
 	;
+}
+
+dldirs_genauth() {
+	[ $# -lt 1 ] && _fatal $e_args "Missing directory name. See -h for details."
+
+	name="$1"
+
+	_require mkdigauth
+
+	_cd "$( _find_parent_dir )"
+
+	dir="$SUBDIR_PUBLIC/$SUBDIR_CONTAINER/$name"
+
+	[ ! -d "$dir" ] && _fatal $e_no_dir "Directory does not exist: $dir"
+
+	mkdigauth -c -T -u download "$dir" | tee -a creds.csv
 }
 
 dldirs_init() {
