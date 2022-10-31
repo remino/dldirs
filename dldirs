@@ -135,7 +135,7 @@ dldirs_new() {
 
 	git clone "$template_path" "$newdir_path" > /dev/null 2>&1
 
-	grep -FRl "#DLDIR_NAME#" "$template_path" | while read -r file
+	grep -FRl "#DLDIR_NAME#" "$newdir_path" | while read -r file
 	do
 		sed -i '' "s/#DLDIR_NAME#/$newdir/g" "$file"
 	done
